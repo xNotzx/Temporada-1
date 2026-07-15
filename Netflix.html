@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amor Eterno - Aranza & Misael</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #141414;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- INTRO ANIMACIÓN NETFLIX --- */
+        .netflix-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeOut 0.8s ease-in-out 3.2s forwards;
+        }
+
+        .intro-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 150px;
+            color: #E50914;
+            letter-spacing: -5px;
+            transform: scale(0.6);
+            opacity: 0;
+            animation: zoomAndShow 2.5s cubic-bezier(0.21, 0.98, 0.6, 0.99) 0.3s forwards;
+            text-shadow: 0 0 20px rgba(229, 9, 20, 0.4);
+        }
+
+        @keyframes zoomAndShow {
+            0% {
+                transform: scale(0.6) translateY(20px);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            30% {
+                opacity: 1;
+                filter: blur(0px);
+            }
+            100% {
+                transform: scale(1.1);
+                opacity: 1;
+                filter: blur(0px);
+                letter-spacing: 2px;
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+       .netflix-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            /* Aquí hacemos el cambio agregando 'imagenes/tu-imagen.jpg' */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(20,20,20,0.85) 55%, rgba(20,20,20,1) 95%), 
+                        url('imagenes/F4.jpeg') no-repeat center top; 
+            background-size: cover;
+            padding-bottom: 40px;
+            opacity: 0;
+            animation: fadeInContent 1s ease-out 3.5s forwards;
+        }
+
+        @keyframes fadeInContent {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Navbar Superior */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .logo {
+            color: #E50914;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+            color: #e5e5e5;
+            list-style: none;
+            font-weight: 400;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        /* Contenido Principal */
+        .content {
+            padding: 240px 25px 20px 25px;
+        }
+
+        .tag-serie {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            color: #e5e5e5;
+            margin-bottom: 5px;
+        }
+
+        .tag-serie span {
+            color: #E50914;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        h1.title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            line-height: 0.9;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+        }
+
+        /* Metadata */
+        .meta-info {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .badge-top10 {
+            background-color: #E50914;
+            color: white;
+            padding: 2px 4px;
+            font-size: 9px;
+            border-radius: 2px;
+            text-align: center;
+            line-height: 1;
+        }
+
+        .badge-top10 span {
+            display: block;
+            font-size: 6px;
+            font-weight: normal;
+        }
+
+        .date, .seasons {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .stars {
+            color: #E50914;
+            display: flex;
+            gap: 2px;
+        }
+
+        /* Sinopsis */
+        .synopsis {
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: #e5e5e5;
+            margin-bottom: 12px;
+            max-width: 95%;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .highlight-text {
+            font-size: 11.5px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* Botones */
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+
+        .btn-play {
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 8px 18px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-play:hover {
+            background-color: #e5e5e5;
+        }
+
+        .btn-favorite {
+            background-color: rgba(128, 128, 128, 0.4);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 8px 18px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .icon-circle {
+            width: 32px;
+            height: 32px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Galería de fotos (Tendencias) */
+        .gallery-section {
+            padding: 0 25px;
+        }
+
+        .gallery-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 9 / 14;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #222;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s;
+        }
+
+        /* --- VENTANA MODAL DE VIDEO --- */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none; /* Oculto por defecto */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-container video, .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .btn-close-video {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .btn-close-video:hover {
+            color: #E50914;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Pantalla de Entrada Estilo Netflix -->
+    <div class="netflix-intro">
+        <div class="intro-logo">N</div>
+    </div>
+
+    <!-- 2. Contenedor Principal (Aparece tras la intro) -->
+    <div class="netflix-container">
+        <!-- Barra de Navegación -->
+        <header>
+            <div class="logo">Amor Eterno</div>
+            <ul class="nav-links">
+                <li>Inicio</li>
+                <li>Series</li>
+                <li>Películas</li>
+                <li>Mi Lista</li>
+            </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <span style="font-size: 10px; font-weight: bold;">Romance</span>
+                <i class="far fa-bell"></i>
+                <div style="width: 20px; height: 20px; background-color: #1a73e8; border-radius: 2px;"></div>
+            </div>
+        </header>
+
+        <!-- Contenido principal -->
+        <div class="content">
+            
+            <div class="tag-serie">
+        
+                <span>N</span> SERIE
+            </div>
+            
+            <h1 class="title">Aranza<br>y Misael</h1>
+
+            <div class="meta-info">
+                <div class="badge-top10">
+                    <span>TOP</span>10
+                </div>
+                <span class="date">15 DE JULIO</span>
+                <span class="seasons">INFINITAS TEMPORADAS</span>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+
+            <p class="synopsis">
+                Nuestra historia de amor es como una serie emocionante, llena de capítulos inolvidables, momentos de suspenso y un enredo que calienta el corazón. Tú eres la estrella principal de mi mundo, y cada día a tu lado es como descubrir un nuevo episodio de nuestro amor.
+            </p>
+            
+            <p class="highlight-text">¡Tú eres mi estrella favorita!</p>
+
+            <div class="action-buttons">
+                <!-- Botón Continuar (Dispara el Video) -->
+                <button class="btn-play" onclick="abrirVideo()">
+                    <i class="fas fa-play"></i> Continuar
+                </button>
+                <button class="btn-favorite">
+                    <i class="fas fa-check"></i> Favorito
+                </button>
+                <div class="icon-circle">
+                    <i class="far fa-thumbs-up"></i>
+                </div>
+                <div class="icon-circle">
+                    <i class="far fa-thumbs-down"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fila de fotos inferior -->
+        <div class="gallery-section">
+            <h3 class="gallery-title">Tendencias</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="imagenes/F8.jpeg" alt="Foto 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="imagenes/F6.jpeg" alt="Foto 6">
+                </div>
+                <div class="gallery-item">
+                    <img src="imagenes/F7.jpeg" alt="Foto 7">
+                </div>
+                <div class="gallery-item">
+                    <img src="imagenes/F3.jpeg" alt="Foto 3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Ventana Emergente (Modal) para el Video -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-container">
+            <button class="btn-close-video" onclick="cerrarVideo()"><i class="fas fa-times"></i></button>
+            
+            <!-- OPCIÓN A: Si tienes un archivo de video propio (ej. video.mp4) en la misma carpeta -->
+            <video id="miVideo" controls>
+                <source src="imagenes/V1.mp4" type="video/mp4">
+                Tu navegador no soporta reproducción de video.
+            </video>
+
+            <!-- OPCIÓN B: Si quieres usar un video de YouTube, borra la etiqueta <video> de arriba y activa esta (quitando los comentarios): -->
+            <!-- <iframe id="youtubeVideo" src="https://www.youtube.com/embed/TU_CODIGO_DE_YOUTUBE?enablejsapi=1" allowfullscreen></iframe> -->
+        </div>
+    </div>
+
+    <!-- Script de control de reproducción -->
+    <script>
+        const modal = document.getElementById('videoModal');
+        const videoLocal = document.getElementById('miVideo');
+        const iframeYoutube = document.getElementById('youtubeVideo');
+
+        function abrirVideo() {
+            modal.style.display = 'flex';
+            if (videoLocal) {
+                videoLocal.play(); // Reproduce automáticamente si es local
+            }
+        }
+
+        function cerrarVideo() {
+            modal.style.display = 'none';
+            if (videoLocal) {
+                videoLocal.pause(); // Detiene el video local al cerrar
+                videoLocal.currentTime = 0;
+            }
+            if (iframeYoutube) {
+                // Truco para detener el video de YouTube al cerrar
+                let src = iframeYoutube.src;
+                iframeYoutube.src = src;
+            }
+        }
+    </script>
+
+</body>
+</html>
